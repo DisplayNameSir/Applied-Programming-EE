@@ -4,12 +4,18 @@ Created on Sun Sep  6 19:03:47 2020
 
 Reference: https://www.geeksforgeeks.org/python-simple-calculator-using-tkinter/?ref=rp
 """
-
+#Changes made:
+    #Changed C to <-
+    #Changed colors to be closer to apple calculator
+    #Swapped ? to sqrt
+    #Changed x^3 to be the same as x^2
+    #Added Log and Factorial to calculator
 
 # importing Tkinter and math
 #!pip install tkinter
 from tkinter import *
 import math
+
 
 # calc class
 class calc:
@@ -21,6 +27,7 @@ class calc:
 		self.newtext=self.expression.replace('/','/')
 		self.newtext=self.newtext.replace('x','*')
 
+    #Inserting two new functions
 
 	def equals(self):
 		"""when the equal button is pressed"""
@@ -36,6 +43,7 @@ class calc:
 			self.e.insert(0,self.value)
 
 	def squareroot(self):
+        #Insert Squareroot symbol into calculator
 		"""squareroot method"""
 		self.getandreplace()
 		try:
@@ -62,8 +70,36 @@ class calc:
 			self.sqval=math.pow(self.value,2)
 			self.e.delete(0,END)
 			self.e.insert(0,self.sqval)
-
-
+    
+	#Log Function
+	def log(self):
+		"""log method"""
+		self.getandreplace()
+		try:
+			#evaluate the expression using the eval function
+			self.value= eval(self.newtext)
+		except SyntaxError or NameError:
+			self.e.delete(0,END)
+			self.e.insert(0,'Invalid Input!')
+		else:
+			self.logval=math.log10(self.value)
+			self.e.delete(0,END)
+			self.e.insert(0,self.logval)
+            
+	#Factorial Function
+	def fact(self):
+		"""factorial method"""
+		self.getandreplace()
+		try:
+			#evaluate the expression using the eval function
+			self.value= eval(self.newtext)
+		except SyntaxError or NameError:
+			self.e.delete(0,END)
+			self.e.insert(0,'Invalid Input!')
+		else:
+			self.fact=math.factorial(self.value)
+			self.e.delete(0,END)
+			self.e.insert(0,self.fact)
 
 	def thirdPower(self):
 		"""thirdPower method"""
@@ -97,109 +133,117 @@ class calc:
 			"""Constructor method"""
 			master.title('Calulator')
 			master.geometry()
+			master['background'] = '#4169e1'
 			self.e = Entry(master)
 			self.e.grid(row=0,column=0,columnspan=6,pady=3)
 			self.e.focus_set() #Sets focus on the input text area
-
+            
 			# Generating Buttons
-			Button(master,text="=",width=11,height=3,fg="blue",
+			Button(master,text="=",width=11,height=3,fg="black",
 				bg="orange",command=lambda:self.equals()).grid(
 									row=4, column=4,columnspan=2)
 
 			Button(master,text='AC',width=5,height=3,
-						fg="black", bg="light green",
+						fg="black", bg="orange",
 			command=lambda:self.clearall()).grid(row=1, column=4)
 
-
-			Button(master,text='C',width=5,height=3,
-				fg="red",bg="light green",
+            #This felt better to be a arrow instead of "C"
+			Button(master,text='<-',width=5,height=3,
+				fg="black",bg="orange",
 				command=lambda:self.clear1()).grid(row=1, column=5)
 
 			Button(master,text="+",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action('+')).grid(row=4, column=3)
 
 			Button(master,text="x",width=5,height=3,
-					fg="blue",bg="orange",
+					fg="black",bg="orange",
 					command=lambda:self.action('x')).grid(row=2, column=3)
 
 			Button(master,text="-",width=5,height=3,
-					fg="red",bg="light green",
+					fg="black",bg="orange",
 					command=lambda:self.action('-')).grid(row=3, column=3)
 
 			Button(master,text="÷",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action('/')).grid(row=1, column=3)
 
 			Button(master,text="%",width=5,height=3,
-				fg="red",bg="light green",
+				fg="black",bg="orange",
 				command=lambda:self.action('%')).grid(row=4, column=2)
 
 			Button(master,text="7",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action('7')).grid(row=1, column=0)
 
 			Button(master,text="8",width=5,height=3,
-				fg="red",bg="light green",
+				fg="black",bg="orange",
 				command=lambda:self.action(8)).grid(row=1, column=1)
 
 			Button(master,text="9",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action(9)).grid(row=1, column=2)
 
 			Button(master,text="4",width=5,height=3,
-				fg="red",bg="light green",
+				fg="black",bg="orange",
 				command=lambda:self.action(4)).grid(row=2, column=0)
 
 			Button(master,text="5",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action(5)).grid(row=2, column=1)
 
 			Button(master,text="6",width=5,height=3,
-				fg="white",bg="blue",
+				fg="black",bg="orange",
 				command=lambda:self.action(6)).grid(row=2, column=2)
 
 			Button(master,text="1",width=5,height=3,
-				fg="red",bg="light green",
+				fg="black",bg="orange",
 				command=lambda:self.action(1)).grid(row=3, column=0)
 
 			Button(master,text="2",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action(2)).grid(row=3, column=1)
 
 			Button(master,text="3",width=5,height=3,
-				fg="white",bg="blue",
+				fg="black",bg="orange",
 				command=lambda:self.action(3)).grid(row=3, column=2)
 
 			Button(master,text="0",width=5,height=3,
-				fg="white",bg="blue",
+				fg="black",bg="orange",
 				command=lambda:self.action(0)).grid(row=4, column=0)
 
 			Button(master,text=".",width=5,height=3,
-				fg="red",bg="light green",
+				fg="black",bg="orange",
 				command=lambda:self.action('.')).grid(row=4, column=1)
 
 			Button(master,text="(",width=5,height=3,
-				fg="white",bg="blue",
+				fg="black",bg="orange",
 				command=lambda:self.action('(')).grid(row=2, column=4)
 
 			Button(master,text=")",width=5,height=3,
-				fg="blue",bg="orange",
+				fg="black",bg="orange",
 				command=lambda:self.action(')')).grid(row=2, column=5)
 
-			Button(master,text="?",width=5,height=3,
-				fg="red",bg="light green",
+			Button(master,text="sqrt",width=5,height=3,
+				fg="black",bg="orange",
 				command=lambda:self.squareroot()).grid(row=3, column=4)
 
-			Button(master,text="x²",width=5,height=3,
-				fg="white",bg="blue",
+			Button(master,text="x\N{SUPERSCRIPT TWO}",width=5,height=3,
+				fg="black",bg="orange",
 				command=lambda:self.square()).grid(row=3, column=5)
 
-
-			Button(master,text="x^3",width=5,height=3,
-				fg="white",bg="green", font='24',
+			Button(master,text="x\N{SUPERSCRIPT THREE}",width=5,height=3,
+				fg="black",bg="orange",
 				command=lambda:self.thirdPower()).grid(row=5, column=0)
 
+#New buttons added (Log and Factorial)
+			Button(master,text="log",width=5,height=3,
+				fg="black",bg="orange",
+				command=lambda:self.log()).grid(row=5, column=1)
+
+			Button(master,text="!",width=5,height=3,
+				fg="black",bg="orange",
+				command=lambda:self.fact()).grid(row=5, column=2)
 
 # Driver Code
 root = Tk()
